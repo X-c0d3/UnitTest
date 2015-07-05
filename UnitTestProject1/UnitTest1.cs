@@ -26,7 +26,7 @@ namespace UnitTestProject1 {
             Console.WriteLine("Hotel count : {0}", api.CountHotel);
             Console.WriteLine("Total Price : {0}", api.GetTotalRoomPrice());
             var hotel = api.SearchHotelById(10003);
-            Assert.IsTrue(hotel != null, "Not found hotel ");
+            Assert.IsTrue(hotel != null, "Not found hotel "); 
             if (hotel != null) {
                 Assert.IsTrue(hotel.HotelName.Equals("Ramsawintanee Bangkok"));
                 Assert.IsTrue(hotel.Room.FirstOrDefault(r=>r.TotalPrice > 9).TotalPrice == 30);
