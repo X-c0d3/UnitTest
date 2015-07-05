@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Test_Driven.Interface;
@@ -24,7 +25,12 @@ namespace UnitTestProject1 {
 
             Console.WriteLine("Hotel count : {0}", api.CountHotel);
             Console.WriteLine("Total Price : {0}", api.GetTotalRoomPrice());
-
+            var hotel = api.SearchHotelById(10003);
+            Assert.IsTrue(hotel != null, "Not found hotel ");
+            if (hotel != null) {
+                Assert.IsTrue(hotel.HotelName.Equals("Ramsawintanee Bangkok"));
+                Assert.IsTrue(hotel.Room.FirstOrDefault(r=>r.TotalPrice > 9).TotalPrice == 30);
+            }
             //Verify logic
             Assert.AreEqual(6, api.CountHotel);
             Assert.AreEqual(120, api.GetTotalRoomPrice());
@@ -50,7 +56,6 @@ namespace UnitTestProject1 {
             mock.Setup(m => m.SearchHotelById(10003)).Returns(new Hotel { HotelId = 10003, HotelName = "Ramsawintanee Bangkok", Room = new List<Room> { new Room { RoomName = "ZZZZZZ", TotalPrice = 30 } } });
             return mock;
         }
-
         //################ Bath file test ###########
         //SET "PATH=C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE"
         //D:
